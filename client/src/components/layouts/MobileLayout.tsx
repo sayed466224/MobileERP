@@ -100,7 +100,7 @@ const MobileLayout: React.FC<MobileLayoutProps> = ({ children, activeTab }) => {
                 </div>
               </SheetContent>
             </Sheet>
-            <h1 className="text-xl font-semibold">MobileERP</h1>
+            <h1 className="text-xl font-semibold text-white">MobileERP</h1>
           </div>
           <div className="flex items-center space-x-4">
             <Button variant="ghost" size="icon" className="text-white hover:bg-primary-700">
@@ -123,8 +123,8 @@ const MobileLayout: React.FC<MobileLayoutProps> = ({ children, activeTab }) => {
               className={cn(
                 "px-4 py-3 font-medium border-b-2 flex-shrink-0 transition-colors",
                 activeTab === item.id 
-                  ? "text-white border-white" 
-                  : "text-primary-100 border-transparent"
+                  ? "text-white border-white font-bold" 
+                  : "text-gray-100 border-transparent hover:text-white hover:bg-primary-700/30"
               )}
               onClick={() => navigate(item.path)}
             >
