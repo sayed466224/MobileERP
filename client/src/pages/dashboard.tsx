@@ -288,12 +288,7 @@ const Dashboard: React.FC = () => {
       <div className="mt-6">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold">Your Tasks</h2>
-          <button 
-            className="text-primary-600 text-sm font-medium"
-            onClick={() => setIsTaskDialogOpen(true)}
-          >
-            Add Task
-          </button>
+
         </div>
         
         <div className="space-y-3">
@@ -319,31 +314,7 @@ const Dashboard: React.FC = () => {
         </div>
       </div>
       
-      {/* Add Task Dialog */}
-      <Dialog open={isTaskDialogOpen} onOpenChange={setIsTaskDialogOpen}>
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
-          <div className="bg-white rounded-lg w-full max-w-md p-4">
-            <h2 className="text-lg font-semibold mb-4">Add New Task</h2>
-            <Input
-              placeholder="Enter task title..."
-              value={newTaskTitle}
-              onChange={(e) => setNewTaskTitle(e.target.value)}
-              className="mb-4"
-            />
-            <div className="flex justify-end space-x-2">
-              <Button variant="outline" onClick={() => setIsTaskDialogOpen(false)}>
-                Cancel
-              </Button>
-              <Button 
-                onClick={() => addTaskMutation.mutate(newTaskTitle)}
-                disabled={!newTaskTitle.trim() || addTaskMutation.isPending}
-              >
-                {addTaskMutation.isPending ? "Adding..." : "Add Task"}
-              </Button>
-            </div>
-          </div>
-        </div>
-      </Dialog>
+
       
       {/* Order Details Bottom Sheet */}
       <OrderDetails 
