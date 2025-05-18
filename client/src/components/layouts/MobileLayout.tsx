@@ -32,7 +32,7 @@ const MobileLayout: React.FC<MobileLayoutProps> = ({ children, activeTab }) => {
       <div className="bg-primary-600 h-safe-top"></div>
       
       {/* Header */}
-      <header className="bg-primary-600 text-white shadow-md">
+      <header className="bg-primary-600 shadow-md">
         <div className="flex items-center justify-between p-4">
           <div className="flex items-center space-x-3">
             <Sheet open={isSidebarOpen} onOpenChange={setIsSidebarOpen}>
@@ -49,7 +49,7 @@ const MobileLayout: React.FC<MobileLayoutProps> = ({ children, activeTab }) => {
                         <AvatarFallback className="bg-primary-700 text-white">JD</AvatarFallback>
                       </Avatar>
                       <div>
-                        <h2 className="font-medium">John Doe</h2>
+                        <h2 className="font-medium text-white">John Doe</h2>
                         <p className="text-sm text-primary-100">Administrator</p>
                       </div>
                     </div>
