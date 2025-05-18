@@ -61,10 +61,181 @@ export class MemStorage implements IStorage {
       activity: 1,
       task: 1,
       stat: 1,
-      cachedData:
-
- 1
+      cachedData: 1
     };
+    
+    // Initialize with demo data
+    this.initializeDemoData();
+  }
+  
+  private initializeDemoData() {
+    // Create demo user
+    const demoUser: User = {
+      id: 1,
+      username: "demo",
+      password: "password",
+      fullName: "Demo User",
+      email: "demo@example.com",
+      avatarInitials: "DU",
+      lastSync: new Date()
+    };
+    this.users.set(demoUser.id, demoUser);
+    
+    // Create demo activities
+    const activities: Activity[] = [
+      {
+        id: this.currentId.activity++,
+        userId: 1,
+        type: "stock_received",
+        title: "Stock Received",
+        description: "25 units of Printer Ink added to inventory",
+        icon: "package",
+        iconBgColor: "bg-green-100",
+        timestamp: new Date(Date.now() - 7200000), // 2 hours ago
+        reference: "INV-001",
+        referenceType: "inventory",
+        assignedTo: "Rajiv Kumar"
+      },
+      {
+        id: this.currentId.activity++,
+        userId: 1,
+        type: "order_placed",
+        title: "New Order Placed",
+        description: "Order #ORD-7832 for ₹12,500",
+        icon: "shopping-cart",
+        iconBgColor: "bg-blue-100",
+        timestamp: new Date(Date.now() - 10800000), // 3 hours ago
+        reference: "ORD-7832",
+        referenceType: "order",
+        assignedTo: "Priya Sharma"
+      },
+      {
+        id: this.currentId.activity++,
+        userId: 1,
+        type: "low_stock",
+        title: "Low Stock Alert",
+        description: "Laptop Charger (SKU: LP-CHR-45W) below threshold",
+        icon: "alert-triangle",
+        iconBgColor: "bg-red-100",
+        timestamp: new Date(Date.now() - 18000000), // 5 hours ago
+        reference: "LP-CHR-45W",
+        referenceType: "inventory",
+        assignedTo: "5 units remaining"
+      }
+    ];
+    
+    activities.forEach(activity => {
+      this.activities.set(activity.id, activity);
+    });
+    
+    // Create demo tasks
+    const tasks: Task[] = [
+      {
+        id: this.currentId.task++,
+        userId: 1,
+        title: "Follow up with supplier about pending order",
+        dueDate: new Date(Date.now() + 86400000), // tomorrow
+        isCompleted: false,
+        completedAt: null
+      },
+      {
+        id: this.currentId.task++,
+        userId: 1,
+        title: "Prepare monthly inventory report",
+        dueDate: new Date(Date.now() + 259200000), // 3 days from now
+        isCompleted: false,
+        completedAt: null
+      },
+      {
+        id: this.currentId.task++,
+        userId: 1,
+        title: "Check delivery status of Order #ORD-7830",
+        dueDate: new Date(Date.now() - 86400000), // yesterday
+        isCompleted: true,
+        completedAt: new Date(Date.now() - 43200000) // 12 hours ago
+      }
+    ];
+    
+    tasks.forEach(task => {
+      this.tasks.set(task.id, task);
+    });
+    
+    // Create demo stats
+    const stats: Stat[] = [
+      {
+        id: this.currentId.stat++,
+        userId: 1,
+        type: "sales_today",
+        value: "24500",
+        changePercentage: "12%",
+        changeDirection: "up",
+        icon: "shopping-cart",
+        lastUpdated: new Date()
+      },
+      {
+        id: this.currentId.stat++,
+        userId: 1,
+        type: "pending_orders",
+        value: "12",
+        changePercentage: "3",
+        changeDirection: "up",
+        icon: "clock",
+        lastUpdated: new Date()
+      }
+    ];
+    
+    stats.forEach(stat => {
+      this.stats.set(stat.id, stat);
+    });
+    
+    // Create demo cached data for inventory, sales, and purchases
+    const inventoryItems = Array.from({ length: 20 }, (_, i) => ({
+      name: `ITEM-${1000 + i}`,
+      item_name: `Product ${i + 1}`,
+      item_code: `SKU-${1000 + i}`,
+      stock_uom: i % 3 === 0 ? "Box" : i % 2 === 0 ? "Kg" : "Nos",
+      description: `This is a sample product description for Product ${i + 1}`
+    }));
+    
+    const salesOrders = Array.from({ length: 15 }, (_, i) => ({
+      name: `ORD-${7820 + i}`,
+      customer: `Customer ${i % 5 + 1}`,
+      transaction_date: new Date(Date.now() - i * 86400000 * 2).toISOString(),
+      grand_total: (10000 + Math.floor(Math.random() * 50000)).toString(),
+      status: i % 3 === 0 ? "To Deliver and Bill" : i % 2 === 0 ? "Processing" : "Completed"
+    }));
+    
+    const purchaseOrders = Array.from({ length: 12 }, (_, i) => ({
+      name: `PO-${4500 + i}`,
+      supplier: `Supplier ${i % 4 + 1}`,
+      transaction_date: new Date(Date.now() - i * 86400000 * 3).toISOString(),
+      grand_total: (15000 + Math.floor(Math.random() * 60000)).toString(),
+      status: i % 3 === 0 ? "To Receive and Bill" : i % 2 === 0 ? "Processing" : "Completed"
+    }));
+    
+    this.cachedData.set("1-inventory_items", {
+      id: this.currentId.cachedData++,
+      userId: 1,
+      dataType: "inventory_items",
+      data: inventoryItems,
+      lastSynced: new Date()
+    });
+    
+    this.cachedData.set("1-sales_orders", {
+      id: this.currentId.cachedData++,
+      userId: 1,
+      dataType: "sales_orders",
+      data: salesOrders,
+      lastSynced: new Date()
+    });
+    
+    this.cachedData.set("1-purchase_orders", {
+      id: this.currentId.cachedData++,
+      userId: 1,
+      dataType: "purchase_orders",
+      data: purchaseOrders,
+      lastSynced: new Date()
+    });
   }
 
   // User operations
